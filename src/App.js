@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.switchXKCD(+history.location.pathname.substring(1));
+    this.switchXKCD(+window.location.pathname.match(/([^/]*)$/)[0]);
 
     document.addEventListener('keydown', this.keyPress.bind(this));
     

@@ -1,6 +1,6 @@
 # xkcd viewer
 
-This is the result of a boring afternoon.
+This is the result of a boring afternoon. [Live demo](https://kraus.rocks/xkcd-viewer/) (Yes, I know it's a bit slow 👀)
 
 ## How to use
 

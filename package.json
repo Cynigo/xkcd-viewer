@@ -2,6 +2,7 @@
   "name": "xkcd",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kraus.rocks/xkcd-viewer/",
   "dependencies": {
     "fetch-jsonp": "^1.1.1",
     "history": "^4.6.1",
