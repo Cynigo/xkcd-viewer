@@ -16,7 +16,10 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      num: 0,
+      comic: {
+        num: 0,
+      },
+      preload: {},
     };
   }
 
@@ -26,9 +29,24 @@ class App extends Component {
     document.addEventListener('keydown', this.keyPress.bind(this));
     
     // Listen to forward/backward history change
-    this.unlisten = history.listen(location => {
-      this.setState(location.state);
+    this.unlisten = history.listen(loc => {
+      this.setState(loc.state);
+      this.preload();
     });
+  }
+
+  // Preload comics the user might visit
+  async preload() {
+    const before = String(this.state.comic.num - 1);
+    const after = String(this.state.comic.num + 1);
+
+    if (!(before in this.state.preload)) {
+      this.getXKCD(before);
+    }
+
+    if (!(after in this.state.preload)) {
+      this.getXKCD(after);
+    }
   }
 
   componentWillUnmount() {
@@ -37,17 +55,34 @@ class App extends Component {
   }
 
   getXKCD(id = null) {
+    if (+id < 1) return Promise.resolve(null);
+
     return fetchJsonp(API_URL(id))
-    .then(res => res.json());
+    .then(res => res.json())
+    .then(res => {
+      if (!res || !Object.keys(res).length) return null;
+      
+      // Cache the comic
+      const state = this.state;
+
+      state.preload[String(res.num)] = res;
+      this.setState(state);
+      return res;
+    });
   }
 
   async switchXKCD(go) {
-    const id = go ? String(this.state.num + go) : null;
-    const comicData = await this.getXKCD(id);
+    const id = go ? this.state.comic.num + go : null;
+    const preloadComic = this.state.preload[id];
 
-    if (!Object.keys(comicData).length) return;
+    const comicData = preloadComic || await this.getXKCD(String(id));
 
-    history[go ? 'push' : 'replace'](String(comicData.num), comicData);
+    if (!comicData || !Object.keys(comicData).length) return;
+
+    const state = this.state;
+    state.comic = comicData;
+
+    history[go ? 'push' : 'replace'](String(comicData.num), state);
     document.title = comicData.title;
   }
 
@@ -71,8 +106,8 @@ class App extends Component {
           onClick={() => this.switchXKCD(1)}
         />
         <Image
-          src={this.state.img}
-          alt={this.state.alt}
+          src={this.state.comic.img}
+          alt={this.state.comic.alt}
         />
       </div>
     );
