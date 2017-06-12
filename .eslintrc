@@ -1,0 +1,29 @@
+{
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"globals": {
+		"console": false,
+		"alert": false,
+		"log": false,
+		"fetch": false,
+		"Promise": false,
+		"window": false
+	},
+	"plugins": [
+		"react"
+	],
+	"extends": ["eslint:recommended", "plugin:react/recommended"],
+	"parserOptions": {
+		"ecmaVersion": 2017,
+		"ecmaFeatures": {
+			"impliedStrict": true,
+			"jsx": true
+		},
+		"sourceType": "module"
+	},
+	"rules": {
+		"no-console": "off"
+	}
+}

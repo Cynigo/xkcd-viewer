@@ -1,0 +1,15 @@
+{
+  "short_name": "XKCD Viewer",
+  "name": "The most plain XKCD Viewer you'll find!",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": ["16x16", "32x32", "48x48", "64x64"],
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

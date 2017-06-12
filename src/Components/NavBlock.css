@@ -1,0 +1,15 @@
+#left {
+	background-color: transparent;
+	left: 0;
+}
+
+#right {
+	background-color: transparent;
+	right: 0;
+}
+
+.navBlock {
+	position: absolute;
+	width: 50%;
+	height: 100%;
+}
