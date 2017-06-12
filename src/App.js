@@ -67,6 +67,14 @@ class App extends Component {
 
       state.preload[String(res.num)] = res;
       this.setState(state);
+
+      // Delete from cache after 5 minutes
+      this.setTimeout(() => {
+        const futureState = this.state;
+
+        delete futureState.preload[String(res.num)];
+        this.setState(futureState);
+      }, 3 * 60 * 1000);
       return res;
     });
   }
