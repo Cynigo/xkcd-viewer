@@ -6,7 +6,10 @@ import './LastComicNotice.css';
 class LastComicNotice extends Component {
 
   render() {
-    if (!this.props.lastVisitComicID || +this.props.lastVisitComicID === +this.props.currentComicID) return null;
+    if (
+      !this.props.lastVisitComicID || 
+      (+this.props.lastVisitComicID !== 0 && +this.props.lastVisitComicID === +this.props.currentComicID)
+    ) return null;
 
     return (
       <div 

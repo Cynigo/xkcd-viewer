@@ -36,6 +36,12 @@ class App extends Component {
       const state = this.state;
       state.lastVisitComicID = lastComicID;
       this.setState(state);
+
+      setTimeout(() => {
+        const futureState = this.state;
+        futureState.lastVisitComicID = null;
+        this.setState(futureState);
+      }, 0.5 * 60 * 10000);
     }
     
     // Listen to forward/backward history change
