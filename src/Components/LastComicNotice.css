@@ -1,0 +1,15 @@
+#notice {
+	background-color: #333;
+	position: absolute;
+	color: #EEE;
+	padding: 5px;
+	border-radius: 4px;
+	font-family: 'Muli', sans-serif;
+	text-transform: uppercase;
+	width: 100px;
+	right: 10px;
+	font-size: 0.75em;
+	display: flex;
+	text-align: center;
+	cursor: pointer;
+}

@@ -4,6 +4,7 @@ import fetchJsonp from 'fetch-jsonp';
 
 import Image from './Components/Image';
 import NavBlock from './Components/NavBlock';
+import LastComicNotice from './Components/LastComicNotice';
 
 import './App.css';
 
@@ -20,6 +21,7 @@ class App extends Component {
         num: 0,
       },
       preload: {},
+      lastVisitComicID: null,
     };
   }
 
@@ -27,6 +29,14 @@ class App extends Component {
     this.switchXKCD(+window.location.pathname.match(/([^/]*)$/)[0]);
 
     document.addEventListener('keydown', this.keyPress.bind(this));
+    const lastComicID = window.localStorage.getItem('lastComicID');
+
+    if (lastComicID) {
+      // Spread operators would be cool..
+      const state = this.state;
+      state.lastVisitComicID = lastComicID;
+      this.setState(state);
+    }
     
     // Listen to forward/backward history change
     this.unlisten = history.listen(loc => {
@@ -69,7 +79,7 @@ class App extends Component {
       this.setState(state);
 
       // Delete from cache after 5 minutes
-      this.setTimeout(() => {
+      setTimeout(() => {
         const futureState = this.state;
 
         delete futureState.preload[String(res.num)];
@@ -92,12 +102,22 @@ class App extends Component {
 
     history[go ? 'push' : 'replace'](String(comicData.num), state);
     document.title = comicData.title;
+    window.localStorage.setItem('lastComicID', String(comicData.num));
   }
 
   keyPress({ key }) {
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
       this.switchXKCD(key === 'ArrowLeft' ? -1 : 1);
     }
+  }
+
+  goToLastVisitedComic() {
+    const goto = Math.abs(+this.state.lastVisitComicID - this.state.comic.num);
+    this.switchXKCD(this.state.comic.num > this.state.lastVisitComicID ? -goto : goto);
+
+    const state = this.state;
+    state.lastVisitComicID = null;
+    this.setState(state);
   }
 
   render() {
@@ -112,6 +132,12 @@ class App extends Component {
         <NavBlock
           id="right"
           onClick={() => this.switchXKCD(1)}
+        />
+
+        <LastComicNotice
+          currentComicID={this.state.comic.num}
+          lastVisitComicID={this.state.lastVisitComicID}
+          onClick={this.goToLastVisitedComic.bind(this)}
         />
         <Image
           src={this.state.comic.img}

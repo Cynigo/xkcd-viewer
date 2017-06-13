@@ -8,22 +8,22 @@ class Image extends Component {
   render() {
     return (
       <div id='image'>
-				<img 
-					{...this.props}
-					alt = {this.props.alt} // Compiler isn't smart enough
-				/>
+        <img 
+          {...this.props}
+          alt = {this.props.alt} // Compiler isn't smart enough
+        />
       </div>
     );
   }
 }
 
 Image.defaultProps = {
-	alt: 'image',
+  alt: 'image',
 };
 
 Image.propTypes = {
-	src: PropTypes.string,
-	alt: PropTypes.string,
+  src: PropTypes.string,
+  alt: PropTypes.string,
 };
 
 export default Image;

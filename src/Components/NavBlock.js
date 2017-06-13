@@ -7,18 +7,18 @@ class NavBlock extends Component {
 
   render() {
     return (
-			<div 
-				id={this.props.id}
-				onClick={this.props.onClick}
-				className='navBlock'
-			/>
+      <div 
+        id={this.props.id}
+        onClick={this.props.onClick}
+        className='navBlock'
+      />
     );
   }
 }
 
 NavBlock.propTypes = {
-	onClick: PropTypes.func.isRequired,
-	id: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default NavBlock;
